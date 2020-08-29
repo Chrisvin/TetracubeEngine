@@ -36,6 +36,9 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(width) { BooleanArray(breadth) } }
 
+    /**
+     * Place the piece on the board in the specified (x, y, z) position
+     */
     fun placePiece(piece: Piece, x: Int, y: Int, z: Int): PlaceStatus {
         // TODO: Add breadth based handling after Pieces have been converted to 3D
         var wasAnyLayerFilled = false
