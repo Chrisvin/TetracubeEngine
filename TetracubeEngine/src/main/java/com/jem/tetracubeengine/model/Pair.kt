@@ -10,23 +10,23 @@ import java.io.Serializable
  *
  * @param A type of the first value.
  * @param B type of the second value.
- * @property first First value.
- * @property second Second value.
+ * @property x First value.
+ * @property y Second value.
  * @constructor Creates a new instance of Pair.
  */
 data class Pair<A, B>(
-    var first: A,
-    var second: B
+    var x: A,
+    var y: B
 ) : Serializable {
 
     /**
-     * Returns string representation of the [Pair] including its [first] and [second] values.
+     * Returns string representation of the [Pair] including its [x] and [y] values.
      */
-    override fun toString(): String = "($first, $second)"
+    override fun toString(): String = "($x, $y)"
 
     override fun equals(other: Any?): Boolean {
         if (other is Pair<*, *>) {
-            return this.first == other.first && this.second == other.second
+            return this.x == other.x && this.y == other.y
         } else {
             return false
         }
@@ -45,4 +45,4 @@ infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
  * Converts this pair into a list.
  * @sample samples.misc.Tuples.pairToList
  */
-fun <T> Pair<T, T>.toList(): List<T> = listOf(first, second)
+fun <T> Pair<T, T>.toList(): List<T> = listOf(x, y)

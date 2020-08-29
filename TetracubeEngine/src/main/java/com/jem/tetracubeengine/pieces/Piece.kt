@@ -43,11 +43,11 @@ abstract class Piece {
         width = 0
         height = 0
         for (block in body) {
-            if (width < block.first + 1) {
-                width = block.first + 1
+            if (width < block.x + 1) {
+                width = block.x + 1
             }
-            if (height < block.second + 1) {
-                height = block.second + 1
+            if (height < block.y + 1) {
+                height = block.y + 1
             }
         }
         // Update the values of the variables first
@@ -59,10 +59,10 @@ abstract class Piece {
      */
     fun rotateClockwise() {
         for (block in body) {
-            val newFirst = block.second
-            val newSecond = ((width - 1) - block.first)
-            block.first = newFirst
-            block.second = newSecond
+            val newFirst = block.y
+            val newSecond = ((width - 1) - block.x)
+            block.x = newFirst
+            block.y = newSecond
         }
         width = height.also { height = width }
         updateSkirt()
@@ -73,10 +73,10 @@ abstract class Piece {
      */
     fun rotateCounterClockwise() {
         for (block in body) {
-            val newFirst = ((height - 1) - block.second)
-            val newSecond = block.first
-            block.first = newFirst
-            block.second = newSecond
+            val newFirst = ((height - 1) - block.y)
+            val newSecond = block.x
+            block.x = newFirst
+            block.y = newSecond
         }
         width = height.also { height = width }
         updateSkirt()
@@ -91,8 +91,8 @@ abstract class Piece {
             skirt.add(-1)
         }
         for (block in body) {
-            if (skirt[block.first] < block.second) {
-                skirt[block.first] = block.second
+            if (skirt[block.x] < block.y) {
+                skirt[block.x] = block.y
             }
         }
     }

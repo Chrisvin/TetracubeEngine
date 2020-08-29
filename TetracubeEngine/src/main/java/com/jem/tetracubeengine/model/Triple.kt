@@ -11,24 +11,24 @@ import java.io.Serializable
  * @param A type of the first value.
  * @param B type of the second value.
  * @param C type of the third value.
- * @property first First value.
- * @property second Second value.
- * @property third Third value.
+ * @property x First value.
+ * @property y Second value.
+ * @property z Third value.
  */
 data class Triple<A, B, C>(
-    var first: A,
-    var second: B,
-    var third: C
+    var x: A,
+    var y: B,
+    var z: C
 ) : Serializable {
 
     /**
-     * Returns string representation of the [Triple] including its [first], [second] and [third] values.
+     * Returns string representation of the [Triple] including its [x], [y] and [z] values.
      */
-    override fun toString(): String = "($first, $second, $third)"
+    override fun toString(): String = "($x, $y, $z)"
 }
 
 /**
  * Converts this triple into a list.
  * @sample samples.misc.Tuples.tripleToList
  */
-fun <T> Triple<T, T, T>.toList(): List<T> = listOf(first, second, third)
+fun <T> Triple<T, T, T>.toList(): List<T> = listOf(x, y, z)
