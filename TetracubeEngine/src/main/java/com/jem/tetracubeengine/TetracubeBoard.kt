@@ -32,8 +32,10 @@ class TetracubeBoard(
     /**
      * The grid represents the possible block spots and determines which spots are filled/empty.
      * If spot at (x,y,z) is true, then it means that a block is at (x,y,z)
+     * NOTE: Grid array is in the format [y][x][z] to optimize clear row fn
      */
-    val grid: Array<Array<BooleanArray>> = Array(height) { Array(breadth) { BooleanArray(width) } }
+    val grid: Array<Array<BooleanArray>> = Array(height) { Array(width) { BooleanArray(breadth) } }
+
 
     /**
      * Clears the layers that are filled
@@ -61,9 +63,9 @@ class TetracubeBoard(
                 )
             }
             for (layer in 1..layersCleared.size) {
-                for (b in 0 until breadth) {
-                    for (w in 0 until width) {
-                        grid[maxHeight + layer][b][w] = false
+                for (w in 0 until width) {
+                    for (b in 0 until breadth) {
+                        grid[maxHeight + layer][w][b] = false
                         if (layer == 1) {
                             heights[w][b] -= layersCleared.size
                         }
@@ -99,7 +101,7 @@ class TetracubeBoard(
         SUCCESS,
 
         /**
-         * Placing piece caused layer to be filled (Seriously? Does this even happen!?)
+         * Placing piece caused layer to be filled
          */
         LAYER_FILLED,
 
