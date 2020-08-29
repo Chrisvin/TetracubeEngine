@@ -53,6 +53,14 @@ class TetracubeBoard(
             if (isLayerFull(y)) {
                 wasAnyLayerFilled = true
             }
+            widths[block.y][0]++
+            breadths[block.y][block.x]++
+            if (heights[block.x][0] < block.y + 1) {
+                heights[block.x][0] = block.y + 1
+                if (maxHeight < heights[block.x][0]) {
+                    maxHeight = heights[block.x][0]
+                }
+            }
         }
         return if (wasAnyLayerFilled) {
             PlaceStatus.LAYER_FILLED
