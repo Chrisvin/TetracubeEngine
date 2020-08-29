@@ -35,20 +35,24 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(breadth) { BooleanArray(width) } }
 
-    fun clearLayers(): Int {
-        var layersCleared = 0
+    /**
+     * Clears the layers that are filled
+     * @return ArrayList containing layer indices that were cleared
+     */
+    fun clearLayers(): ArrayList<Int> {
+        val layersCleared = ArrayList<Int>()
         // Layers to drop down (fromLayer -> toLayer) since some layers below were cleared
         val layersToDrop: ArrayList<Pair<Int, Int>> = ArrayList()
         for (h in 0 until height) {
             if (isLayerFull(h)) {
-                layersCleared++
-            } else if (layersCleared > 0) {
-                layersToDrop.add(Pair(h, h - layersCleared))
+                layersCleared.add(h)
+            } else if (layersCleared.size > 0) {
+                layersToDrop.add(Pair(h, h - layersCleared.size))
             }
         }
-        maxHeight -= layersCleared
+        maxHeight -= layersCleared.size
         // Check if layers were cleared, and move blocks down accordingly
-        if (layersCleared > 0) {
+        if (layersCleared.size > 0) {
             for (layer in layersToDrop) {
                 System.arraycopy(
                     grid[layer.first], 0,
@@ -56,12 +60,12 @@ class TetracubeBoard(
                     grid[layer.first].size
                 )
             }
-            for (layer in 1..layersCleared) {
+            for (layer in 1..layersCleared.size) {
                 for (b in 0 until breadth) {
                     for (w in 0 until width) {
                         grid[maxHeight + layer][b][w] = false
                         if (layer == 1) {
-                            heights[w][b] -= layersCleared
+                            heights[w][b] -= layersCleared.size
                         }
                     }
                 }
