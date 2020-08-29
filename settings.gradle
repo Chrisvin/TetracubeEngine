@@ -1,2 +1,3 @@
+include ':TetracubeEngine'
 include ':app'
 rootProject.name = "TetracubeEngineDemo"
