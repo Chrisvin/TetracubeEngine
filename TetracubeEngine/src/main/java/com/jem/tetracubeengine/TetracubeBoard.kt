@@ -44,24 +44,27 @@ class TetracubeBoard(
         var wasAnyLayerFilled = false
         // Check if block is within the bounds of the grid or if it overlaps with existing blocks
         for (block in piece.body) {
-            if (block.x < 0 || block.x > width - 1 ||
-                block.y < 0 || block.y > height - 1
-//                block.z < 0 || block.z > width - 1
+            val blockX = block.x + x
+            val blockY = block.y + y
+            val blockZ = 0/*block.z*/ + z
+            if (blockX < 0 || blockX > width - 1 ||
+                blockY < 0 || blockY > height - 1 ||
+                blockZ < 0 || blockZ > breadth - 1
             ) {
                 return PlaceStatus.OUT_OF_BOUNDS
-            } else if (grid[block.y][block.x][0]) {
+            } else if (grid[blockY][blockX][blockZ]) {
                 return PlaceStatus.OVERLAP_WITH_EXISTING
             }
-            grid[block.y][block.x][0] = true
+            grid[blockY][blockX][blockZ] = true
             if (isLayerFull(y)) {
                 wasAnyLayerFilled = true
             }
-            widths[block.y][0]++
-            breadths[block.y][block.x]++
-            if (heights[block.x][0] < block.y + 1) {
-                heights[block.x][0] = block.y + 1
-                if (maxHeight < heights[block.x][0]) {
-                    maxHeight = heights[block.x][0]
+            widths[blockY][blockZ]++
+            breadths[blockY][blockX]++
+            if (heights[blockX][blockZ] < blockY + 1) {
+                heights[blockX][blockZ] = blockY + 1
+                if (maxHeight < heights[blockX][blockZ]) {
+                    maxHeight = heights[blockX][blockZ]
                 }
             }
         }
