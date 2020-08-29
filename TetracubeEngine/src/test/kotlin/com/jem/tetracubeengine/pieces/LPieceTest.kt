@@ -21,6 +21,21 @@ class LPieceTest {
         assert(compareBodyState(piece.body, expectedBodyStates[2]))
         piece.rotateClockwise()
         assert(compareBodyState(piece.body, expectedBodyStates[3]))
+        piece.rotateClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[0]))
+
+        piece.rotateClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[1]))
+        piece.rotateCounterClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[0]))
+        piece.rotateCounterClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[3]))
+        piece.rotateCounterClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[2]))
+        piece.rotateCounterClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[1]))
+        piece.rotateCounterClockwise()
+        assert(compareBodyState(piece.body, expectedBodyStates[0]))
     }
 
     private fun compareBodyState(

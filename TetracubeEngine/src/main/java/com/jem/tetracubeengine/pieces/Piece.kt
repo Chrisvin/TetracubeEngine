@@ -58,7 +58,6 @@ abstract class Piece {
      * Rotate the piece clockwise
      */
     fun rotateClockwise() {
-        val newBody = ArrayList<Pair<Int, Int>>()
         for (block in body) {
             val newFirst = block.second
             val newSecond = ((width - 1) - block.first)
@@ -68,6 +67,21 @@ abstract class Piece {
         width = height.also { height = width }
         updateSkirt()
     }
+
+    /**
+     * Rotate the piece counterclockwise
+     */
+    fun rotateCounterClockwise() {
+        for (block in body) {
+            val newFirst = ((height - 1) - block.second)
+            val newSecond = block.first
+            block.first = newFirst
+            block.second = newSecond
+        }
+        width = height.also { height = width }
+        updateSkirt()
+    }
+
     /**
      * To be called when body changes, so that the values of skirt can be updated
      */
