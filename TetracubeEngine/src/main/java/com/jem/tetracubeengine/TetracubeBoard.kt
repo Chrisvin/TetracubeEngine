@@ -76,6 +76,22 @@ class TetracubeBoard(
     }
 
     /**
+     * Drop piece from given (x, z) position
+     * @return y value where the origin (0,0) of a piece will come to rest
+     */
+    fun dropHeight(piece: Piece, x: Int, z: Int): Int {
+        // TODO: Add breadth based handling after Pieces have been converted to 3D
+        // Initially assume it'll fall till the ground
+        var highestCollisionPoint = 0
+        for (w in 0 until piece.width) {
+            if (highestCollisionPoint < heights[x + w][z] - piece.skirt[w]) {
+                highestCollisionPoint = heights[x + w][z] - piece.skirt[w]
+            }
+        }
+        return highestCollisionPoint
+    }
+
+    /**
      * Clears the layers that are filled
      * @return ArrayList containing layer indices that were cleared
      */
