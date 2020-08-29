@@ -146,6 +146,6 @@ class TetracubeBoard(
         val DEFAULT_HEIGHT = 24
 
         // TODO: Change value to non-zero and verify if impl works for Tetracube properly
-        val DEFAULT_BREADTH = 0 /*12*/
+        val DEFAULT_BREADTH = 1 /*12*/
     }
 }
