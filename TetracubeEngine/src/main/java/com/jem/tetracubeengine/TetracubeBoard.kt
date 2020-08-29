@@ -35,6 +35,55 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(breadth) { BooleanArray(width) } }
 
+    fun clearLayers(): Int {
+        var layersCleared = 0
+        // Layers to drop down (fromLayer -> toLayer) since some layers below were cleared
+        val layersToDrop: ArrayList<Pair<Int, Int>> = ArrayList()
+        for (h in 0 until height) {
+            if (isLayerFull(h)) {
+                layersCleared++
+            } else if (layersCleared > 0) {
+                layersToDrop.add(Pair(h, h - layersCleared))
+            }
+        }
+        maxHeight -= layersCleared
+        // Check if layers were cleared, and move blocks down accordingly
+        if (layersCleared > 0) {
+            for (layer in layersToDrop) {
+                System.arraycopy(
+                    grid[layer.first], 0,
+                    grid[layer.second], 0,
+                    grid[layer.first].size
+                )
+            }
+            for (layer in 1..layersCleared) {
+                for (b in 0 until breadth) {
+                    for (w in 0 until width) {
+                        grid[maxHeight + layer][b][w] = false
+                        if (layer == 1) {
+                            heights[w][b] -= layersCleared
+                        }
+                    }
+                }
+            }
+        }
+        return layersCleared
+    }
+
+    private fun isLayerFull(layer: Int): Boolean {
+        for (w in widths[layer]) {
+            if (w != width) {
+                return false
+            }
+        }
+        for (b in breadths[layer]) {
+            if (b != breadth) {
+                return false
+            }
+        }
+        return true
+    }
+
     /**
      * Enums depicting the possible status values that
      * can be gotten when attempting to place a piece in the board.
