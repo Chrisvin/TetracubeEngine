@@ -2,7 +2,7 @@ package com.jem.tetracubeengine.pieces
 
 import com.jem.tetracubeengine.model.Pair
 
-class JPiece: Piece() {
+class JPiece : Piece() {
     override val pieceName: String = "J-Piece"
 
     override fun getInitialBody(): ArrayList<Pair<Int, Int>> = arrayListOf(

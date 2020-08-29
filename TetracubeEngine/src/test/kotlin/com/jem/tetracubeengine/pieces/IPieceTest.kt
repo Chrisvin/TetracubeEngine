@@ -1,9 +1,8 @@
 package com.jem.tetracubeengine.pieces
 
-import com.jem.tetracubeengine.handler.PieceTestHandler
 import com.jem.tetracubeengine.model.Pair
 
-class IPieceTest: PieceTest() {
+class IPieceTest : PieceTest() {
 
     override val piece: Piece = IPiece()
 

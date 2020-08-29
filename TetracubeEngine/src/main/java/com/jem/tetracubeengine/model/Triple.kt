@@ -15,20 +15,20 @@ import java.io.Serializable
  * @property second Second value.
  * @property third Third value.
  */
-public data class Triple<A, B, C>(
-    public var first: A,
-    public var second: B,
-    public var third: C
+data class Triple<A, B, C>(
+    var first: A,
+    var second: B,
+    var third: C
 ) : Serializable {
 
     /**
      * Returns string representation of the [Triple] including its [first], [second] and [third] values.
      */
-    public override fun toString(): String = "($first, $second, $third)"
+    override fun toString(): String = "($first, $second, $third)"
 }
 
 /**
  * Converts this triple into a list.
  * @sample samples.misc.Tuples.tripleToList
  */
-public fun <T> Triple<T, T, T>.toList(): List<T> = listOf(first, second, third)
+fun <T> Triple<T, T, T>.toList(): List<T> = listOf(first, second, third)

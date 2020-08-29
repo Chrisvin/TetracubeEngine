@@ -14,15 +14,15 @@ import java.io.Serializable
  * @property second Second value.
  * @constructor Creates a new instance of Pair.
  */
-public data class Pair<A, B>(
-    public var first: A,
-    public var second: B
+data class Pair<A, B>(
+    var first: A,
+    var second: B
 ) : Serializable {
 
     /**
      * Returns string representation of the [Pair] including its [first] and [second] values.
      */
-    public override fun toString(): String = "($first, $second)"
+    override fun toString(): String = "($first, $second)"
 
     override fun equals(other: Any?): Boolean {
         if (other is Pair<*, *>) {
@@ -39,10 +39,10 @@ public data class Pair<A, B>(
  * This can be useful for creating [Map] literals with less noise, for example:
  * @sample samples.collections.Maps.Instantiation.mapFromPairs
  */
-public infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
+infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
 
 /**
  * Converts this pair into a list.
  * @sample samples.misc.Tuples.pairToList
  */
-public fun <T> Pair<T, T>.toList(): List<T> = listOf(first, second)
+fun <T> Pair<T, T>.toList(): List<T> = listOf(first, second)
