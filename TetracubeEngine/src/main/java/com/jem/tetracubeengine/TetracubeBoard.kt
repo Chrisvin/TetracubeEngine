@@ -36,6 +36,30 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(width) { BooleanArray(breadth) } }
 
+    fun placePiece(piece: Piece, x: Int, y: Int, z: Int): PlaceStatus {
+        // TODO: Add breadth based handling after Pieces have been converted to 3D
+        var wasAnyLayerFilled = false
+        // Check if block is within the bounds of the grid or if it overlaps with existing blocks
+        for (block in piece.body) {
+            if (block.x < 0 || block.x > width - 1 ||
+                block.y < 0 || block.y > height - 1
+//                block.z < 0 || block.z > width - 1
+            ) {
+                return PlaceStatus.OUT_OF_BOUNDS
+            } else if (grid[block.y][block.x][0]) {
+                return PlaceStatus.OVERLAP_WITH_EXISTING
+            }
+            grid[block.y][block.x][0] = true
+            if (isLayerFull(y)) {
+                wasAnyLayerFilled = true
+            }
+        }
+        return if (wasAnyLayerFilled) {
+            PlaceStatus.LAYER_FILLED
+        } else {
+            PlaceStatus.SUCCESS
+        }
+    }
 
     /**
      * Clears the layers that are filled
