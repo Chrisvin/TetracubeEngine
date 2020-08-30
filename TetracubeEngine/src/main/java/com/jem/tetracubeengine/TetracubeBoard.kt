@@ -275,10 +275,10 @@ class TetracubeBoard(
     }
 
     companion object {
-        val DEFAULT_WIDTH = 12
-        val DEFAULT_HEIGHT = 24
+        const val DEFAULT_WIDTH = 12
+        const val DEFAULT_HEIGHT = 24
 
         // TODO: Change value to non-zero and verify if impl works for Tetracube properly
-        val DEFAULT_BREADTH = 1 /*12*/
+        const val DEFAULT_BREADTH = 1 /*12*/
     }
 }
