@@ -72,7 +72,13 @@ class TetracubeBoard(
     /**
      * Place the piece on the board in the specified (x, y, z) position
      */
-    fun placePiece(piece: Piece, x: Int, y: Int, z: Int): PlaceStatus {
+    fun placePiece(
+        piece: Piece,
+        x: Int,
+        y: Int,
+        z: Int,
+        checkLayerFilled: Boolean = false
+    ): PlaceStatus {
         // TODO: Add breadth based handling after Pieces have been converted to 3D
         isCommitted = false
         var wasAnyLayerFilled = false
@@ -100,7 +106,7 @@ class TetracubeBoard(
                 }
             }
             // Check if block causes the layer to fill up
-            if (isLayerFull(blockY, blockX, blockZ)) {
+            if (checkLayerFilled && isLayerFull(blockY, blockX, blockZ)) {
                 wasAnyLayerFilled = true
             }
         }
