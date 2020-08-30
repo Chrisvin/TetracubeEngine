@@ -36,6 +36,33 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(width) { BooleanArray(breadth) } }
 
+    // Backup variables
+
+    /**
+     * Backup of the widths for fast undo
+     */
+    var backupWidths: Array<IntArray> = Array(height) { IntArray(breadth) }
+
+    /**
+     * Backup of the heights for fast undo
+     */
+    var backupHeights: Array<IntArray> = Array(width) { IntArray(breadth) }
+
+    /**
+     * Backup of the breadths for fast undo
+     */
+    var backupBreadths: Array<IntArray> = Array(height) { IntArray(width) }
+
+    /**
+     * Backup of the max height for fast undo
+     */
+    var backupMaxHeight: Int = maxHeight
+
+    /**
+     * Backup of the grid for fast undo
+     */
+    val backupGrid: Array<Array<BooleanArray>> = grid
+
     /**
      * Place the piece on the board in the specified (x, y, z) position
      */
@@ -132,6 +159,55 @@ class TetracubeBoard(
         return layersCleared
     }
 
+    /**
+     * Commits the state of the board for future undo
+     */
+    fun commit() {
+        backupMaxHeight = maxHeight
+        copyState(
+            widths, heights,
+            breadths, grid,
+            backupWidths, backupHeights,
+            backupBreadths, backupGrid
+        )
+    }
+
+    /**
+     * Undo to the last commited state
+     */
+    fun undo() {
+        maxHeight = backupMaxHeight
+        copyState(
+            backupWidths, backupHeights,
+            backupBreadths, backupGrid,
+            widths, heights,
+            breadths, grid
+        )
+    }
+
+    /**
+     * Helper function to copy array values
+     */
+    private fun copyState(
+        fromWidths: Array<IntArray>, fromHeights: Array<IntArray>,
+        fromBreadths: Array<IntArray>, fromGrid: Array<Array<BooleanArray>>,
+        toWidths: Array<IntArray>, toHeights: Array<IntArray>,
+        toBreadths: Array<IntArray>, toGrid: Array<Array<BooleanArray>>
+    ) {
+        System.arraycopy(fromWidths, 0, toWidths, 0, fromWidths.size)
+        System.arraycopy(fromHeights, 0, toHeights, 0, fromHeights.size)
+        System.arraycopy(fromBreadths, 0, toBreadths, 0, fromBreadths.size)
+        for (h in 0 until height) {
+            for (w in 0 until width) {
+                System.arraycopy(fromGrid[h][w], 0, toGrid[h][w], 0, breadth)
+            }
+        }
+    }
+
+    /**
+     * Checks if given layer is filled.
+     * Has minor optimization if (x, z) values are provided
+     */
     private fun isLayerFull(layer: Int, x: Int = 0, z: Int = 0): Boolean {
         if (widths[layer][z] != width || breadths[layer][x] != breadth) {
             // Minor optimization, First check if the row that block was added to is filled.
