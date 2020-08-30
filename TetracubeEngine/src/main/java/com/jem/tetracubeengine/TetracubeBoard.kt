@@ -130,7 +130,12 @@ class TetracubeBoard(
         return layersCleared
     }
 
-    private fun isLayerFull(layer: Int): Boolean {
+    private fun isLayerFull(layer: Int, x: Int = 0, z: Int = 0): Boolean {
+        if (widths[layer][z] != width || breadths[layer][x] != breadth) {
+            // Minor optimization, First check if the row that block was added to is filled.
+            // During a normal game, it's much more likely that a block will not fill up a layer.
+            return false
+        }
         for (w in widths[layer]) {
             if (w != width) {
                 return false
