@@ -36,6 +36,12 @@ class TetracubeBoard(
      */
     val grid: Array<Array<BooleanArray>> = Array(height) { Array(width) { BooleanArray(breadth) } }
 
+    /**
+     * Denotes whether the board is in commited state or not.
+     * (i.e) Whether current state & backup state are the same or not.
+     */
+    var isCommitted: Boolean = false
+
     // Backup variables
 
     /**
@@ -68,6 +74,7 @@ class TetracubeBoard(
      */
     fun placePiece(piece: Piece, x: Int, y: Int, z: Int): PlaceStatus {
         // TODO: Add breadth based handling after Pieces have been converted to 3D
+        isCommitted = false
         var wasAnyLayerFilled = false
         // Check if block is within the bounds of the grid or if it overlaps with existing blocks
         for (block in piece.body) {
@@ -138,6 +145,7 @@ class TetracubeBoard(
         maxHeight -= layersCleared.size
         // Check if layers were cleared, and move blocks down accordingly
         if (layersCleared.size > 0) {
+            isCommitted = false
             for (layer in layersToDrop) {
                 System.arraycopy(
                     grid[layer.first], 0,
@@ -163,6 +171,10 @@ class TetracubeBoard(
      * Commits the state of the board for future undo
      */
     fun commit() {
+        if (isCommitted) {
+            // Already in committed state
+            return
+        }
         backupMaxHeight = maxHeight
         copyState(
             widths, heights,
@@ -170,12 +182,18 @@ class TetracubeBoard(
             backupWidths, backupHeights,
             backupBreadths, backupGrid
         )
+        // Updated to new commit state
+        isCommitted = true
     }
 
     /**
-     * Undo to the last commited state
+     * Undo to the last commit state
      */
     fun undo() {
+        if (isCommitted) {
+            // Already in committed state
+            return
+        }
         maxHeight = backupMaxHeight
         copyState(
             backupWidths, backupHeights,
@@ -183,6 +201,8 @@ class TetracubeBoard(
             widths, heights,
             breadths, grid
         )
+        // Reverted to old commit state
+        isCommitted = true
     }
 
     /**
