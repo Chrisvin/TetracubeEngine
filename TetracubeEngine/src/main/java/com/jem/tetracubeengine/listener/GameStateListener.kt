@@ -17,7 +17,7 @@ interface GameStateListener {
     /**
      * Called when pieces are changed
      */
-    fun onPieceChanged(previousPiece: Piece, currentPiece: Piece, nextPiece: Piece)
+    fun onPieceChanged(currentPiece: Piece, nextPiece: Piece)
 
     /**
      * Called when game ends
