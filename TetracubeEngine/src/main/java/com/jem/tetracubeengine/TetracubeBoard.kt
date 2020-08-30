@@ -55,10 +55,8 @@ class TetracubeBoard(
             } else if (grid[blockY][blockX][blockZ]) {
                 return PlaceStatus.OVERLAP_WITH_EXISTING
             }
+            // Fill the spot with the block & update corresponding variables
             grid[blockY][blockX][blockZ] = true
-            if (isLayerFull(y)) {
-                wasAnyLayerFilled = true
-            }
             widths[blockY][blockZ]++
             breadths[blockY][blockX]++
             if (heights[blockX][blockZ] < blockY + 1) {
@@ -66,6 +64,10 @@ class TetracubeBoard(
                 if (maxHeight < heights[blockX][blockZ]) {
                     maxHeight = heights[blockX][blockZ]
                 }
+            }
+            // Check if block causes the layer to fill up
+            if (isLayerFull(blockY, blockX, blockZ)) {
+                wasAnyLayerFilled = true
             }
         }
         return if (wasAnyLayerFilled) {
