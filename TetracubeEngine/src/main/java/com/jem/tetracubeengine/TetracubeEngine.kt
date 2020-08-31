@@ -154,6 +154,18 @@ class TetracubeEngine {
         gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
     }
 
+    fun hardDrop() {
+        board.undo()
+        previousY = board.dropHeight(currentPiece, previousX, previousZ) + 1
+        gameTask.run()
+        // TODO: Add flag for hard drop and multiply layer fill score accordingly
+    }
+
+    fun dropOneLayer() {
+        gameTask.run()
+        // TODO: Add flag for soft drop and multiply layer fill score accordingly
+    }
+
     }
 
     private fun prepareNewPiece() {
