@@ -6,13 +6,112 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/newGame"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="New Game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gridTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="monospace"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/softDrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/newGame" />
+
+    <TextView
+        android:id="@+id/currentPieceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/softDrop" />
+
+    <Button
+        android:id="@+id/softDrop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingVertical="16dp"
+        android:text="Soft drop"
+        app:layout_constraintBottom_toTopOf="@id/rotateCounterClockwise"
+        app:layout_constraintEnd_toStartOf="@id/hardDrop"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/hardDrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingVertical="16dp"
+        android:text="Hard drop"
+        app:layout_constraintBottom_toBottomOf="@id/softDrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/softDrop"
+        app:layout_constraintTop_toTopOf="@id/softDrop" />
+
+    <Button
+        android:id="@+id/rotateCounterClockwise"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingVertical="16dp"
+        android:text="Rotate Counter Clockwise"
+        app:layout_constraintBottom_toTopOf="@id/moveLeft"
+        app:layout_constraintEnd_toStartOf="@id/rotateClockwise"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/rotateClockwise"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingVertical="16dp"
+        android:text="Rotate Clockwise"
+        app:layout_constraintBottom_toBottomOf="@id/rotateCounterClockwise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/moveLeft"
+        app:layout_constraintTop_toTopOf="@id/rotateCounterClockwise" />
+
+    <Button
+        android:id="@+id/moveLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingVertical="16dp"
+        android:text="Move Left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/moveRight"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/moveRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingVertical="16dp"
+        android:text="Move Right"
+        app:layout_constraintBottom_toBottomOf="@id/moveLeft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/moveLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
