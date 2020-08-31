@@ -3,7 +3,7 @@ package com.jem.tetracubeengine.util
 import com.jem.tetracubeengine.pieces.*
 import java.util.*
 
-object PieceUtil {
+internal object PieceUtil {
 
     private val random: Random = Random()
 
