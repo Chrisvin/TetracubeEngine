@@ -130,7 +130,7 @@ class TetracubeEngine {
         board.undo()
         val placeStatus = board.placePiece(
             currentPiece,
-            previousX, previousY, previousZ + 1,
+            previousX, previousY + 1, previousZ,
             checkLayerFilled = true
         )
         when (placeStatus) {
