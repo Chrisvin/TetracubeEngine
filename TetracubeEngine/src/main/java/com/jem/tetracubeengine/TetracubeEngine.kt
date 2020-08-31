@@ -166,6 +166,46 @@ class TetracubeEngine {
         // TODO: Add flag for soft drop and multiply layer fill score accordingly
     }
 
+    fun moveLeft() {
+        val oldX = previousX
+        previousX--
+        board.undo()
+        val placeStatus = board.placePiece(currentPiece, previousX, previousY, previousZ)
+        when (placeStatus) {
+            TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING, TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
+                // Not a valid move, revert to previous state
+                // TODO: Check if it's possible to check for this case, instead of doing & then reverting
+                previousX = oldX
+                board.undo()
+                board.placePiece(currentPiece, previousX, previousY, previousZ)
+            }
+            else -> {
+                // It's valid, peace out.
+            }
+        }
+        gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
+    }
+
+    fun moveRight() {
+        val oldX = previousX
+        previousX++
+        board.undo()
+        val placeStatus = board.placePiece(currentPiece, previousX, previousY, previousZ)
+        when (placeStatus) {
+            TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING, TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
+                // Not a valid move, revert to previous state
+                // TODO: Check if it's possible to check for this case, instead of doing & then reverting
+                previousX = oldX
+                board.undo()
+                board.placePiece(currentPiece, previousX, previousY, previousZ)
+            }
+            else -> {
+                // It's valid, peace out.
+            }
+        }
+        gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
+    }
+
     }
 
     private fun prepareNewPiece() {
