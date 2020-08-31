@@ -58,32 +58,35 @@ class TetracubeEngine {
     /**
      * TimerTask that contains the logic of what happens each time the timer ticks.
      */
-    private val gameTask: TimerTask = object : TimerTask() {
-        override fun run() {
-            board.undo()
-            previousY--
-            when (board.placePiece(currentPiece, previousX, previousY, previousZ)) {
-                TetracubeBoard.PlaceStatus.SUCCESS -> {
-                    // Was able to place piece successfully
-                    // Check if piece can be moved further down next time.
+    private val gameTask: Runnable = Runnable {
+        board.undo()
+        previousY--
+        val placeStatus = board.placePiece(currentPiece, previousX, previousY, previousZ)
+        when (placeStatus) {
+            TetracubeBoard.PlaceStatus.SUCCESS -> {
+                // Was able to place piece successfully
+                // Check if piece can be moved further down next time.
+            }
+            TetracubeBoard.PlaceStatus.LAYER_FILLED -> {
+                // This shouldn't be occurring here.
+                // TODO: Add timber logs to check why this case is arising
+            }
+            TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
+                if (previousY - currentPiece.height < 0) {
+                    // Current piece hit the bottom of the grid
+                    placeCurrentPieceAndCalculateScore()
+                    prepareNewPiece()
+                } else {
+                    // Shouldn't occur, but if it does, then it's probably one of the following
+                    // 1. width/breadth for the grid was too small
+                    // 2. previousX/previousZ is exceeding width/breadth limits
+                    // TODO: Add timber log to check above cases
                 }
-                TetracubeBoard.PlaceStatus.LAYER_FILLED -> {
-                    // This shouldn't be occurring here.
-                    // TODO: Add timber logs to check why this case is arising
-                }
-                TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
-                    if (previousY - currentPiece.height < 0) {
-                        // Current piece hit the bottom of the grid
-                        placeCurrentPieceAndCalculateScore()
-                        prepareNewPiece()
-                    } else {
-                        // Shouldn't occur, but if it does, then it's probably one of the following
-                        // 1. width/breadth for the grid was too small
-                        // 2. previousX/previousZ is exceeding width/breadth limits
-                        // TODO: Add timber log to check above cases
-                    }
-                }
-                TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING -> {
+            }
+            TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING -> {
+                if (previousY == board.height - 1) {
+                    stopGame()
+                } else {
                     // Current piece hit some other existing blocks on the grid
                     placeCurrentPieceAndCalculateScore()
                     prepareNewPiece()
@@ -101,7 +104,12 @@ class TetracubeEngine {
             breadth = settings.boardBreadth
         )
         prepareNewPiece()
-        tickTimer.scheduleAtFixedRate(gameTask, settings.initialTickDelay, settings.tickInterval)
+        tickTimer = Timer()
+        tickTimer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                gameTask.run()
+            }
+        }, settings.initialTickDelay, settings.tickInterval)
     }
 
     fun stopGame() {
