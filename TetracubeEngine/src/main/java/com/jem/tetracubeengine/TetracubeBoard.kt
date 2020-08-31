@@ -239,11 +239,13 @@ class TetracubeBoard(
         toWidths: Array<IntArray>, toHeights: Array<IntArray>,
         toBreadths: Array<IntArray>, toGrid: Array<Array<BooleanArray>>
     ) {
-        System.arraycopy(fromWidths, 0, toWidths, 0, fromWidths.size)
-        System.arraycopy(fromHeights, 0, toHeights, 0, fromHeights.size)
-        System.arraycopy(fromBreadths, 0, toBreadths, 0, fromBreadths.size)
         for (h in 0 until height) {
+            System.arraycopy(fromWidths[h], 0, toWidths[h], 0, fromWidths[h].size)
+            System.arraycopy(fromBreadths[h], 0, toBreadths[h], 0, fromBreadths[h].size)
             for (w in 0 until width) {
+                if (h == 0) {
+                    System.arraycopy(fromHeights[w], 0, toHeights[w], 0, fromHeights[w].size)
+                }
                 System.arraycopy(fromGrid[h][w], 0, toGrid[h][w], 0, breadth)
             }
         }
