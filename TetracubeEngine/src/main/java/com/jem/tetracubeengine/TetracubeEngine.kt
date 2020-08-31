@@ -154,7 +154,7 @@ class TetracubeEngine {
         nextPiece = PieceUtil.getRandomPiece()
         previousX = board.width / 2
         previousZ = board.breadth / 2
-        previousY = board.height
+        previousY = board.height - (currentPiece.height - 1)
         board.commit()
     }
 
