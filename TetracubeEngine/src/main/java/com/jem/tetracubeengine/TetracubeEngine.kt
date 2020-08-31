@@ -53,7 +53,7 @@ class TetracubeEngine {
     /**
      * Timer to schedule the piece position update
      */
-    private val tickTimer: Timer = Timer()
+    private var tickTimer: Timer? = null
 
     /**
      * TimerTask that contains the logic of what happens each time the timer ticks.
@@ -93,6 +93,8 @@ class TetracubeEngine {
     }
 
     fun startNewGame(settings: TetracubeSettings = TetracubeSettings()) {
+        tickTimer?.cancel()
+        tickTimer?.purge()
         board = TetracubeBoard(
             width = settings.boardWidth,
             height = settings.boardHeight,
@@ -100,6 +102,12 @@ class TetracubeEngine {
         )
         prepareNewPiece()
         tickTimer.scheduleAtFixedRate(gameTask, settings.initialTickDelay, settings.tickInterval)
+    }
+
+    fun stopGame() {
+        tickTimer?.cancel()
+        tickTimer?.purge()
+        tickTimer = null
     }
 
     private fun placeCurrentPieceAndCalculateScore() {
