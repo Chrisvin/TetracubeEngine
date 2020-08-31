@@ -206,6 +206,42 @@ class TetracubeEngine {
         gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
     }
 
+    fun rotateClockwise() {
+        currentPiece.rotateClockwise()
+        board.undo()
+        val placeStatus = board.placePiece(currentPiece, previousX, previousY, previousZ)
+        when (placeStatus) {
+            TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING, TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
+                // Not a valid move, revert to previous state
+                // TODO: Check if it's possible to check for this case, instead of doing & then reverting
+                currentPiece.rotateCounterClockwise()
+                board.undo()
+                board.placePiece(currentPiece, previousX, previousY, previousZ)
+            }
+            else -> {
+                // It's valid, peace out.
+            }
+        }
+        gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
+    }
+
+    fun rotateCounterClockwise() {
+        currentPiece.rotateCounterClockwise()
+        board.undo()
+        val placeStatus = board.placePiece(currentPiece, previousX, previousY, previousZ)
+        when (placeStatus) {
+            TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING, TetracubeBoard.PlaceStatus.OUT_OF_BOUNDS -> {
+                // Not a valid move, revert to previous state
+                // TODO: Check if it's possible to check for this case, instead of doing & then reverting
+                currentPiece.rotateClockwise()
+                board.undo()
+                board.placePiece(currentPiece, previousX, previousY, previousZ)
+            }
+            else -> {
+                // It's valid, peace out.
+            }
+        }
+        gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
     }
 
     private fun prepareNewPiece() {
