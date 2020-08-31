@@ -152,6 +152,7 @@ class TetracubeEngine {
     private fun prepareNewPiece() {
         currentPiece = nextPiece
         nextPiece = PieceUtil.getRandomPiece()
+        gameStateListener?.onPieceChanged(currentPiece, nextPiece)
         previousX = board.width / 2
         previousZ = board.breadth / 2
         previousY = board.height - (currentPiece.height - 1)
