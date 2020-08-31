@@ -154,20 +154,38 @@ class TetracubeBoard(
         if (layersCleared.size > 0) {
             isCommitted = false
             for (layer in layersToDrop) {
+                for (w in 0 until width) {
+                    System.arraycopy(
+                        grid[layer.first][w], 0,
+                        grid[layer.second][w], 0,
+                        breadth
+                    )
+                }
                 System.arraycopy(
-                    grid[layer.first], 0,
-                    grid[layer.second], 0,
-                    grid[layer.first].size
+                    breadths[layer.first], 0,
+                    breadths[layer.second], 0,
+                    width
                 )
+                System.arraycopy(
+                    widths[layer.first], 0,
+                    widths[layer.second], 0,
+                    breadth
+                )
+            }
+            for (w in 0 until width) {
+                for (b in 0 until breadth) {
+                    for (layer in 1..layersCleared.size) {
+                        grid[maxHeight + layer][w][b] = false
+                    }
+                    heights[w][b] -= layersCleared.size
+                }
             }
             for (layer in 1..layersCleared.size) {
                 for (w in 0 until width) {
-                    for (b in 0 until breadth) {
-                        grid[maxHeight + layer][w][b] = false
-                        if (layer == 1) {
-                            heights[w][b] -= layersCleared.size
-                        }
-                    }
+                    breadths[maxHeight + layer][w] = 0
+                }
+                for (b in 0 until breadth) {
+                    widths[maxHeight + layer][b] = 0
                 }
             }
         }
