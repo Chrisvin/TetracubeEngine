@@ -66,6 +66,12 @@ class TetracubeEngine {
             TetracubeBoard.PlaceStatus.SUCCESS -> {
                 // Was able to place piece successfully
                 // Check if piece can be moved further down next time.
+                gameStateListener?.onGridUpdated(
+                    board.grid,
+                    board.height,
+                    board.width,
+                    board.breadth
+                )
             }
             TetracubeBoard.PlaceStatus.LAYER_FILLED -> {
                 // This shouldn't be occurring here.
@@ -110,12 +116,14 @@ class TetracubeEngine {
                 gameTask.run()
             }
         }, settings.initialTickDelay, settings.tickInterval)
+        gameStateListener?.onGameStarted(settings)
     }
 
     fun stopGame() {
         tickTimer?.cancel()
         tickTimer?.purge()
         tickTimer = null
+        gameStateListener?.onGameEnded()
     }
 
     private fun placeCurrentPieceAndCalculateScore() {
