@@ -141,12 +141,19 @@ class TetracubeEngine {
                 // Placing current piece causes 1 or more layers to be filled
                 val clearedLayers = board.clearLayers()
                 // TODO: Clear the rows and calculate the score
+
+                // TODO: Consider whether maybe this should just be a callback to the app,
+                //  and the app decides when the layers will be cleared?
+                //  So as to allow time for clear animations.
             }
             else -> {
                 // This shouldn't occur, placing the piece should definitely be a success
                 // TODO: Add timber log to check exactly what case this is & why it occurs
             }
         }
+        gameStateListener?.onGridUpdated(board.grid, board.height, board.width, board.breadth)
+    }
+
     }
 
     private fun prepareNewPiece() {
