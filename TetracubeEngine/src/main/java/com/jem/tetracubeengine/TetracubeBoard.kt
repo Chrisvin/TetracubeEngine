@@ -67,7 +67,8 @@ class TetracubeBoard(
     /**
      * Backup of the grid for fast undo
      */
-    val backupGrid: Array<Array<BooleanArray>> = grid
+    val backupGrid: Array<Array<BooleanArray>> =
+        Array(height) { Array(width) { BooleanArray(breadth) } }
 
     /**
      * Place the piece on the board in the specified (x, y, z) position
