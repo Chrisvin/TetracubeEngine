@@ -124,6 +124,25 @@ class TetracubeEngine {
         gameStateListener?.onGameStarted(this.settings)
     }
 
+    fun resumeGame() {
+        tickTimer?.cancel()
+        tickTimer?.purge()
+        tickTimer = Timer()
+        tickTimer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                gameTask.run()
+            }
+        }, this.settings.initialTickDelay, this.settings.tickInterval)
+        gameStateListener?.onGameResumed()
+    }
+
+    fun pauseGame() {
+        tickTimer?.cancel()
+        tickTimer?.purge()
+        tickTimer = null
+        gameStateListener?.onGamePaused()
+    }
+
     fun stopGame() {
         tickTimer?.cancel()
         tickTimer?.purge()
