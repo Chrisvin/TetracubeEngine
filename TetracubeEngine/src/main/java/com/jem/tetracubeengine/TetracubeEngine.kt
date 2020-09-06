@@ -127,11 +127,16 @@ class TetracubeEngine {
         tickTimer?.cancel()
         tickTimer?.purge()
         tickTimer = Timer()
-        tickTimer?.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                gameTask.run()
-            }
-        }, this.settings.initialTickDelay, this.settings.tickInterval)
+        tickTimer?.scheduleAtFixedRate(
+            object : TimerTask() {
+                override fun run() {
+                    gameTask.run()
+                }
+            },
+            // Resume with initial delay as tickInterval (because it makes more sense from UX perspective IMO)
+            this.settings.tickInterval,
+            this.settings.tickInterval
+        )
         gameStateListener?.onGameResumed()
     }
 
