@@ -35,6 +35,9 @@ class TetracubeEngine {
      */
     var gameStateListener: GameStateListener? = null
 
+    var settings: TetracubeSettings = TetracubeSettings()
+        private set
+
     /**
      * The last known X position of the current piece
      */
@@ -104,10 +107,12 @@ class TetracubeEngine {
     fun startNewGame(settings: TetracubeSettings = TetracubeSettings()) {
         tickTimer?.cancel()
         tickTimer?.purge()
+        this.settings = settings
         board = TetracubeBoard(
-            width = settings.boardWidth,
-            height = settings.boardHeight,
-            breadth = settings.boardBreadth
+            width = this.settings.boardWidth,
+            height = this.settings.boardHeight,
+            breadth = this.settings.boardBreadth
+        )
         )
         prepareNewPiece()
         tickTimer = Timer()
@@ -115,8 +120,8 @@ class TetracubeEngine {
             override fun run() {
                 gameTask.run()
             }
-        }, settings.initialTickDelay, settings.tickInterval)
-        gameStateListener?.onGameStarted(settings)
+        }, this.settings.initialTickDelay, this.settings.tickInterval)
+        gameStateListener?.onGameStarted(this.settings)
     }
 
     fun stopGame() {
