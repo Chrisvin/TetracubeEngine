@@ -88,10 +88,10 @@ abstract class Piece {
     private fun updateSkirt() {
         skirt.clear()
         repeat(width) {
-            skirt.add(-1)
+            skirt.add(Int.MAX_VALUE)
         }
         for (block in body) {
-            if (skirt[block.x] < block.y) {
+            if (skirt[block.x] > block.y) {
                 skirt[block.x] = block.y
             }
         }
