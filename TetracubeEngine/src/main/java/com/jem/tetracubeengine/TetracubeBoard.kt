@@ -122,13 +122,34 @@ class TetracubeBoard(
      * Drop piece from given (x, z) position
      * @return y value where the origin (0,0) of a piece will come to rest
      */
-    fun dropHeight(piece: Piece, x: Int, z: Int): Int {
+    fun dropHeight(piece: Piece, x: Int, z: Int, y: Int? = null): Int {
         // TODO: Add breadth based handling after Pieces have been converted to 3D
         // Initially assume it'll fall till the ground
         var highestCollisionPoint = 0
+        var highestCollisionSkirt = 0
         for (w in 0 until piece.width) {
             if (highestCollisionPoint < heights[x + w][z] - piece.skirt[w]) {
                 highestCollisionPoint = heights[x + w][z] - piece.skirt[w]
+                highestCollisionSkirt = piece.skirt[w]
+            }
+        }
+        if (y != null) {
+            if (highestCollisionPoint > y + highestCollisionSkirt) {
+                // This means that the piece is currenty under some other blocks on the board,
+                // Need to check vertically from each y-point in the piece skirt
+                highestCollisionPoint = 0
+                highestCollisionSkirt = 0
+                for (w in 0 until piece.width) {
+                    for (h in y + piece.skirt[w] downTo 0) {
+                        if (grid[h][x + w][z]) {
+                            if (highestCollisionPoint < h) {
+                                highestCollisionPoint = h
+                                highestCollisionSkirt = piece.skirt[w]
+                            }
+                            break
+                        }
+                    }
+                }
             }
         }
         return highestCollisionPoint
