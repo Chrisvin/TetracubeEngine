@@ -118,5 +118,17 @@ class MainActivity : AppCompatActivity() {
         newGame.setOnClickListener {
             tetracubeEngine.startNewGame()
         }
+
+        resumeGame.setOnClickListener {
+            tetracubeEngine.resumeGame()
+        }
+
+        pauseGame.setOnClickListener {
+            tetracubeEngine.pauseGame()
+        }
+
+        stopGame.setOnClickListener {
+            tetracubeEngine.stopGame()
+        }
     }
 }

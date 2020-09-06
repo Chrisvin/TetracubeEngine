@@ -11,12 +11,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="New Game"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stopGame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stopGame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="End game"
+        app:layout_constraintBottom_toBottomOf="@id/newGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/newGame"
+        app:layout_constraintTop_toTopOf="@id/newGame" />
+
+    <Button
+        android:id="@+id/resumeGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Resume game"
+        app:layout_constraintEnd_toStartOf="@id/pauseGame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newGame" />
+
+    <Button
+        android:id="@+id/pauseGame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Pause game"
+        app:layout_constraintBottom_toBottomOf="@id/resumeGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/resumeGame"
+        app:layout_constraintTop_toTopOf="@id/resumeGame" />
 
     <TextView
         android:id="@+id/gridTextView"
@@ -27,15 +61,15 @@
         app:layout_constraintBottom_toTopOf="@id/softDrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newGame" />
+        app:layout_constraintTop_toBottomOf="@id/resumeGame" />
 
     <TextView
         android:id="@+id/currentPieceTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/softDrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/softDrop" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/softDrop"
