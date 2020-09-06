@@ -156,7 +156,9 @@ class TetracubeEngine {
 
     fun hardDrop() {
         board.undo()
-        previousY = board.dropHeight(currentPiece, previousX, previousZ) + 1
+        previousY = board.dropHeight(currentPiece, previousX, previousZ, previousY)
+        // Increment because the value is decremented in gameTask
+        previousY++
         gameTask.run()
         // TODO: Add flag for hard drop and multiply layer fill score accordingly
     }
