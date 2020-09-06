@@ -43,7 +43,9 @@ class MainActivity : AppCompatActivity() {
 
         tetracubeEngine.gameStateListener = object : GameStateListener {
             override fun onGameStarted(settings: TetracubeSettings) {
-                Toast.makeText(this@MainActivity, "Game Started", Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Game Started", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onGridUpdated(
@@ -87,7 +89,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPieceChanged(currentPiece: Piece, nextPiece: Piece) {
-                currentPieceTextView.text = currentPiece.pieceName
+                runOnUiThread {
+                    currentPieceTextView.text = currentPiece.pieceName
+                }
             }
 
             override fun onGameEnded() {
