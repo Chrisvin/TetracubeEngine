@@ -10,6 +10,11 @@ interface GameStateListener {
     fun onGameStarted(settings: TetracubeSettings)
 
     /**
+     * Called when game is resumed
+     */
+    fun onGameResumed()
+
+    /**
      * Called when blocks in the [grid] have been changed and UI needs to be updated
      */
     fun onGridUpdated(grid: Array<Array<BooleanArray>>, height: Int, width: Int, breadth: Int)
@@ -18,6 +23,11 @@ interface GameStateListener {
      * Called when pieces are changed
      */
     fun onPieceChanged(currentPiece: Piece, nextPiece: Piece)
+
+    /**
+     * Called when game is paused
+     */
+    fun onGamePaused()
 
     /**
      * Called when game ends
