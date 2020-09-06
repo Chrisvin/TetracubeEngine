@@ -93,7 +93,7 @@ class TetracubeEngine {
                 }
             }
             TetracubeBoard.PlaceStatus.OVERLAP_WITH_EXISTING -> {
-                if (previousY == board.height - 1) {
+                if (previousY == board.height - currentPiece.height) {
                     stopGame()
                 } else {
                     // Current piece hit some other existing blocks on the grid
