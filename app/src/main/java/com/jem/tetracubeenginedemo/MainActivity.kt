@@ -48,6 +48,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            override fun onGameResumed() {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Game Resumed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             override fun onGridUpdated(
                 grid: Array<Array<BooleanArray>>, height: Int, width: Int, breadth: Int
             ) {
@@ -91,6 +97,12 @@ class MainActivity : AppCompatActivity() {
             override fun onPieceChanged(currentPiece: Piece, nextPiece: Piece) {
                 runOnUiThread {
                     currentPieceTextView.text = currentPiece.pieceName
+                }
+            }
+
+            override fun onGamePaused() {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Game Paused", Toast.LENGTH_SHORT).show()
                 }
             }
 
