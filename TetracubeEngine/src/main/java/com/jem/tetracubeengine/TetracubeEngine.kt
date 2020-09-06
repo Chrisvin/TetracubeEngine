@@ -113,7 +113,6 @@ class TetracubeEngine {
             height = this.settings.boardHeight,
             breadth = this.settings.boardBreadth
         )
-        )
         prepareNewPiece()
         tickTimer = Timer()
         tickTimer?.scheduleAtFixedRate(object : TimerTask() {
