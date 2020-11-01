@@ -104,6 +104,7 @@ class TetracubeEngine {
         }
     }
 
+    @JvmOverloads
     fun startNewGame(settings: TetracubeSettings = TetracubeSettings()) {
         tickTimer?.cancel()
         tickTimer?.purge()
