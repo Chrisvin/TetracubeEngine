@@ -1,6 +1,7 @@
 package com.jem.tetracubeengine.pieces
 
 import com.jem.tetracubeengine.model.Pair
+import com.jem.tetracubeengine.model.Triple
 
 /**
  * Base class for the Piece design
@@ -29,14 +30,19 @@ abstract class Piece {
 
 
     /**
-     * Rightmost block of the piece
+     * Rightmost block of the piece, Block furthest away from origin in X-axis
      */
     var width: Int = 0
 
     /**
-     * Topmost block of the piece
+     * Topmost block of the piece, Block furthest away from origin in Y-axis
      */
     var height: Int = 0
+
+    /**
+     * Block furthest away from origin in Z-axis
+     */
+    var breadth: Int = 0
 
     init {
         body = getInitialBody()
@@ -52,6 +58,10 @@ abstract class Piece {
         }
         // Update the values of the variables first
         updateSkirt()
+    }
+
+    fun getBlockCount(): Int {
+        return body.size
     }
 
     /**
