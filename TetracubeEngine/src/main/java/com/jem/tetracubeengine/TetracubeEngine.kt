@@ -198,6 +198,9 @@ class TetracubeEngine {
     }
 
     fun moveLeft() {
+        if (previousX == 0) {
+            return
+        }
         val oldX = previousX
         previousX--
         board.undo()
@@ -218,6 +221,9 @@ class TetracubeEngine {
     }
 
     fun moveRight() {
+        if (previousX + currentPiece.width > board.width) {
+            return
+        }
         val oldX = previousX
         previousX++
         board.undo()
